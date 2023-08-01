@@ -48,28 +48,36 @@ public class BulletPool : MonoBehaviour
         }
     }
 
-    public GameObject getPlayerBullets()
+    public GameObject getBullets(BulletType bulletType)
     {
-        for( int i = 0; i < playerBulletList.Count; i++)
+        switch (bulletType)
         {
-            if (!playerBulletList[i].activeInHierarchy)
-            {
-                return playerBulletList[i];
-            }
-        }
-        return null;
-    }
+            case BulletType.PlayerBullet:
+                for (int i = 0; i < playerBulletList.Count; i++)
+                {
+                    if (!playerBulletList[i].activeInHierarchy)
+                    {
+                        return playerBulletList[i];
+                    }
+                }
+                break;
 
-    public GameObject getEnemyBullets()
-    {
-        for (int i = 0; i < enemyBulletList.Count; i++)
-        {
-            if (!enemyBulletList[i].activeInHierarchy)
-            {
-                return enemyBulletList[i];
-            }
+            case BulletType.EnemyBullet:
+                for (int i = 0; i < enemyBulletList.Count; i++)
+                {
+                    if (!enemyBulletList[i].activeInHierarchy)
+                    {
+                        return enemyBulletList[i];
+                    }
+                }
+                break;
         }
         return null;
     }
 }
 
+public enum BulletType
+{
+    PlayerBullet,
+    EnemyBullet
+};

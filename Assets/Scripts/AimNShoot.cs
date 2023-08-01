@@ -9,7 +9,7 @@ public class AimNShoot : MonoBehaviour
     private Vector3 mousePos;
     private float shootingSpeed = 30f;
     private float maxAimAngle = 75f;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] public Transform firePoint;
 
     // Start is called before the first frame update
     private void Start()
@@ -24,12 +24,12 @@ public class AimNShoot : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            shoot();
+            shoot(BulletType.PlayerBullet);
         }
         
     }
 
-    protected virtual void aim()
+    public virtual void aim()
     {
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         Vector3 direction = mousePos - transform.position;
@@ -38,9 +38,9 @@ public class AimNShoot : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    protected void shoot()
+    public void shoot(BulletType type)
     {
-        GameObject bullet = BulletPool.Instance.getPlayerBullets();
+        GameObject bullet = BulletPool.Instance.getBullets(type);
 
         if(bullet != null)
         {

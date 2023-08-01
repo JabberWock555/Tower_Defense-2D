@@ -35,10 +35,6 @@ public class EnemySpawner : MonoBehaviour
                 spwanEnemy();
             }
         }
-        else
-        {
-            Destroy(spawnPoint.gameObject);
-        }
         
     }
 
