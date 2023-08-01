@@ -35,14 +35,14 @@ public class BulletPool : MonoBehaviour
 
         for (int i =0; i<playerBulletAmount; i++)
         {
-            GameObject bullet = Instantiate<Bullet>(playerBullet).gameObject;
+            GameObject bullet = Instantiate<Bullet>(playerBullet, transform).gameObject;
             bullet.SetActive(false);
             playerBulletList.Add(bullet);
         }
 
         for (int i = 0; i < enemyBulletAmount; i++)
         {
-            GameObject e_bullet = Instantiate<Bullet>(enemyBullet).gameObject;
+            GameObject e_bullet = Instantiate<Bullet>(enemyBullet, transform).gameObject;
             e_bullet.SetActive(false);
             enemyBulletList.Add(e_bullet);
         }
@@ -76,8 +76,3 @@ public class BulletPool : MonoBehaviour
     }
 }
 
-public enum BulletType
-{
-    PlayerBullet,
-    EnemyBullet
-};
