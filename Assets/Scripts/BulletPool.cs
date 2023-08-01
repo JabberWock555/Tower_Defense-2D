@@ -20,21 +20,32 @@ public class BulletPool : MonoBehaviour
     }
 
     private List<GameObject> playerBulletList;
+    private List<GameObject> enemyBulletList;
+
     [SerializeField] private int playerBulletAmount;
     [SerializeField] private Bullet playerBullet;
+    [SerializeField] private int enemyBulletAmount;
+    [SerializeField] private Bullet enemyBullet;
 
     // Start is called before the first frame update
     void Start()
     {
         playerBulletList = new List<GameObject>();
+        enemyBulletList = new List<GameObject>();
 
-        for(int i =0; i<playerBulletAmount; i++)
+        for (int i =0; i<playerBulletAmount; i++)
         {
             GameObject bullet = Instantiate<Bullet>(playerBullet).gameObject;
             bullet.SetActive(false);
             playerBulletList.Add(bullet);
         }
-        
+
+        for (int i = 0; i < enemyBulletAmount; i++)
+        {
+            GameObject e_bullet = Instantiate<Bullet>(enemyBullet).gameObject;
+            e_bullet.SetActive(false);
+            enemyBulletList.Add(e_bullet);
+        }
     }
 
     public GameObject getPlayerBullets()
@@ -48,4 +59,17 @@ public class BulletPool : MonoBehaviour
         }
         return null;
     }
+
+    public GameObject getEnemyBullets()
+    {
+        for (int i = 0; i < enemyBulletList.Count; i++)
+        {
+            if (!enemyBulletList[i].activeInHierarchy)
+            {
+                return enemyBulletList[i];
+            }
+        }
+        return null;
+    }
 }
+
