@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    
+    private float timer;
+
 }

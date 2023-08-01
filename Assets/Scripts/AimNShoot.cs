@@ -12,13 +12,13 @@ public class AimNShoot : MonoBehaviour
     [SerializeField] private Transform firePoint;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         cam = Camera.main;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         aim();
 
@@ -29,7 +29,7 @@ public class AimNShoot : MonoBehaviour
         
     }
 
-    private void aim()
+    protected virtual void aim()
     {
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         Vector3 direction = mousePos - transform.position;
@@ -38,7 +38,7 @@ public class AimNShoot : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    private void shoot()
+    protected void shoot()
     {
         GameObject bullet = BulletPool.Instance.getPlayerBullets();
 
