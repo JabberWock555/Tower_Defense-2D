@@ -44,11 +44,6 @@ public class GameManager : MonoBehaviour
         play(false);
     }
 
-    void Update()
-    {
-        
-    }
-
     public int GetLevelNo()
     {
         return currLevel;

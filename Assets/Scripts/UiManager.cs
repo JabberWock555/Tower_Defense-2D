@@ -96,6 +96,7 @@ public class UiManager : MonoBehaviour
     public void PauseButton()
     {
         currMenu.SetActive(true);
+        GameManager.Instance.Playing = false;
         LoadMenu(Menus.PauseMenu);
     }
 

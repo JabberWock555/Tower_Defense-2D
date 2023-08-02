@@ -22,7 +22,7 @@ public class EnemyController : GunController
 
     private void Update()
     {
-        if (health > 0)
+        if (health > 0 && GameManager.Instance.Playing)
         {
             Aim();
             movement();
