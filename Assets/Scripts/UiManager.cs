@@ -2,34 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 public class UiManager : MonoBehaviour
 {
-    private static UiManager instance;
-    public static UiManager Instance { get { return instance; } }
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     [SerializeField] private GameObject[] MenuList;
     [SerializeField] private Text MessageBox;
-    private int currMenu;
+    [SerializeField] private GameObject currMenu;
+    [SerializeField] private Slider PlayerHealthBar;
+    [SerializeField] private Slider TowerHealthBar;
+    [SerializeField] private Text ScoreDisplay;
+    private int currMenuNo;
 
     private void Start()
     {
-        currMenu = (int)Menus.MainMenu;
-        MenuList[currMenu].SetActive(true);
+        LoadMenu(Menus.MainMenu);
         MessageBox.gameObject.SetActive(false);
+        string highScoreText = "HighScore : " + PlayerPrefs.GetInt("HighScore");
+        StartCoroutine(DisplayMessage(highScoreText));
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.Playing)
+        {
+            int playerHealth = PlayerController.Instance.getPlayerHealth();
+            int towerHealth = PlayerController.Instance.getTowerHealth();
+
+            PlayerHealthBar.value = playerHealth;
+            TowerHealthBar.value = towerHealth;
+            ScoreDisplay.text = "Score: " + GameManager.Instance.Score;
+        }
     }
 
     public void openLevelMenu()
@@ -39,52 +40,63 @@ public class UiManager : MonoBehaviour
 
     public void LoadLevel(int levelNo)
     {
+
         if(GameManager.Instance.GetLevelStatus(levelNo - 1) != LevelStatus.Level_Locked)
         {
-            SceneManager.LoadScene(1);
             GameManager.Instance.LoadLevel(levelNo - 1);
+            currMenu.SetActive(false);
         }
         else
         {
             string msg = " Level Locked!";
             StartCoroutine(DisplayMessage(msg));
         }
+        SoundManager.Instance.Play(SoundEvents.ButtonClick);
     }
 
     public void openLevelCompleteMenu()
     {
-        SceneManager.LoadScene(0);
+        currMenu.SetActive(true);
         LoadMenu(Menus.CompletedMenu);
     }
 
     public void openLevelFailedMenu()
     {
-        SceneManager.LoadScene(0);
+        currMenu.SetActive(true);
         LoadMenu(Menus.FailMenu);
     }
 
     public void PlayButton()
     {
         int currLevel = GameManager.Instance.GetLevelNo();
-        SceneManager.LoadScene(1);
+        currMenu.SetActive(false);
         GameManager.Instance.LoadLevel(currLevel);
+        SoundManager.Instance.Play(SoundEvents.ButtonClick);
 
     }
 
     public void QuitButton()
     {
         Application.Quit();
+        SoundManager.Instance.Play(SoundEvents.ButtonClick);
+    }
+
+    public void RetryButton()
+    {
+        currMenu.SetActive(false);
+        GameManager.Instance.ReloadLevel();
     }
 
     public void ExitButton()
     {
-        SceneManager.LoadScene(0);
+        currMenu.SetActive(true);
         LoadMenu(Menus.MainMenu);
     }
 
     public void PauseButton()
     {
-        SceneManager.LoadScene(0);
+        currMenu.SetActive(true);
+        GameManager.Instance.Playing = false;
         LoadMenu(Menus.PauseMenu);
     }
 
@@ -98,9 +110,11 @@ public class UiManager : MonoBehaviour
 
     private void LoadMenu(Menus menus)
     {
-        MenuList[currMenu].SetActive(false);
-        currMenu = (int)menus;
-        MenuList[currMenu].SetActive(true);
+        currMenu.SetActive(false);
+        currMenuNo = (int)menus;
+        currMenu = MenuList[currMenuNo];
+        currMenu.SetActive(true);
+        SoundManager.Instance.Play(SoundEvents.ButtonClick);
     }
 }
 

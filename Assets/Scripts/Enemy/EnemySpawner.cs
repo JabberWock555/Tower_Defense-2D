@@ -85,4 +85,14 @@ public class EnemySpawner : MonoBehaviour
     {
         enemyCount = _enemyCount;
     }
+
+    public void reloadSpawn()
+    {
+        for(int i = 0; i < enemyList.Count; i++)
+        {
+            Destroy(enemyList[i]);
+            enemyList.RemoveAt(i);
+        }
+    }
+
 }

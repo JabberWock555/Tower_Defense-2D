@@ -13,17 +13,17 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
+    [SerializeField] private UiManager uiManager;
+    [SerializeField] private GameObject Level;
     [SerializeField] private int LevelCount;
     [HideInInspector]public int Score;
-    private int defaultPlayerHealth = 100;
+    private int defaultPlayerHealth = 50;
     private int HighScore;
 
     public bool Playing = false;
@@ -41,12 +41,7 @@ public class GameManager : MonoBehaviour
         }
         currLevel = 0;
         Levels[currLevel].levelStatus = LevelStatus.Level_Unlocked;
-
-    }
-
-    void Update()
-    {
-        
+        play(false);
     }
 
     public int GetLevelNo()
@@ -71,33 +66,52 @@ public class GameManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        UiManager.Instance.openLevelCompleteMenu();
-        Playing = false;
+        uiManager.openLevelCompleteMenu();
+        play(false);
         Levels[currLevel].levelStatus = LevelStatus.Level_Completed;
         if (currLevel >= 0 && currLevel < Levels.Length)
         {
             currLevel++;
             Levels[currLevel].levelStatus = LevelStatus.Level_Unlocked;
-            if (Score > HighScore) { PlayerPrefs.SetInt("Score", HighScore); }
+            if (Score > HighScore) {
+                HighScore += Score;
+                PlayerPrefs.SetInt("HighScore",HighScore);
+            }
         }
     }
 
     public void LevelFailed()
     {
-        UiManager.Instance.openLevelFailedMenu();
-        Playing = false;
-        //Debug.Log("Level Failed");
-        //LoadLevel(currLevel);
+        uiManager.openLevelFailedMenu();
+        play(false);
     }
 
     public void LoadLevel(int levelNo)
     {
         if (Levels[levelNo].levelStatus != LevelStatus.Level_Locked)
         {
+            Score = 0;
             PlayerController.Instance.PlayerHealth(defaultPlayerHealth, defaultPlayerHealth);
             EnemySpawner.Instance.setEnemyCount(Levels[currLevel].enemyCount);
-            Playing = true;
+            play(true);
+
         }
     }
 
+    public void ReloadLevel()
+    {
+        if (Levels[currLevel].levelStatus != LevelStatus.Level_Locked)
+        {
+            PlayerController.Instance.PlayerHealth(defaultPlayerHealth, defaultPlayerHealth);
+            EnemySpawner.Instance.setEnemyCount(Levels[currLevel].enemyCount);
+            EnemySpawner.Instance.reloadSpawn();
+            play(true);
+        }
+    }
+
+    private void play(bool status)
+    {
+        Playing = status;
+        Level.SetActive(status);
+    }
 }

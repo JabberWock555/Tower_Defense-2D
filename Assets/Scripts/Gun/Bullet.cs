@@ -7,7 +7,16 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        SoundManager.Instance.Play(SoundEvents.BulletHit);
         gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (!GameManager.Instance.Playing)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 }

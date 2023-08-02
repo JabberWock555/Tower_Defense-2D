@@ -41,7 +41,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if( towerHealth < 0 && playerHealth < 0)
+
+        if( towerHealth <= 0 && playerHealth <= 0)
         {
             GameManager.Instance.LevelFailed();
         }

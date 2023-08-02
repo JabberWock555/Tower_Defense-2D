@@ -156,8 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d25dcec6ee9d4639b48eed1988937e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
   firePoint: {fileID: 6790736596455245879}
-  shootingTime: 2
-  movingSpeed: 1
+  shootingTime: 2.5
+  movingSpeed: 2
   playerTransform: {fileID: 0}
+  health: 15
+  explosion: {fileID: 0}
