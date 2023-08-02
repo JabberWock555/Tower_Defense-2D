@@ -1,5 +1,7 @@
 # Tower Defense Game - Mouse Aim and Shoot
 
+![images](https://github.com/JabberWock555/Tower_Defense-FlyingCaps_Test-/assets/97807224/9f0d2e4b-6dba-40f4-868d-8594bde3997a)
+
 ## GameplayShots
 <img width="1624" alt="Screenshot 2023-08-02 at 9 14 31 AM" src="https://github.com/JabberWock555/Tower_Defense-FlyingCaps_Test-/assets/97807224/0593f7e6-0864-4567-a358-3c310689202b">
 <img width="1624" alt="Screenshot 2023-08-02 at 9 14 39 AM" src="https://github.com/JabberWock555/Tower_Defense-FlyingCaps_Test-/assets/97807224/bc1ea50d-f7f1-49bf-a01a-e5d0daedc37e">
