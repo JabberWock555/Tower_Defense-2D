@@ -24,7 +24,14 @@ public class GunController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot(BulletType.PlayerBullet);
+            if (GameManager.Instance.Playing)
+            {
+                Shoot(BulletType.PlayerBullet);
+            }
+            else
+            {
+                GameManager.Instance.Playing = true;
+            }
         }
 
     }

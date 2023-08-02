@@ -4,14 +4,32 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private static EnemySpawner instance;
+    public static EnemySpawner Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public int enemyCount;
     public float spawnTime;
+    public int enemyLeft;
     
     [SerializeField] EnemyController enemyPrefab;
     [SerializeField] private Transform leftBound;
     [SerializeField] private Transform rightBound;
-    private List<GameObject> enemyList;
+
+    [SerializeField] private List<GameObject> enemyList;
     private Transform spawnPoint;
+
     private float timer = 0f;
 
 
@@ -26,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyList.Count <= enemyCount)
+        if (enemyCount > 0 && GameManager.Instance.Playing)
         {
             timer += Time.deltaTime;
             if (timer > spawnTime)
@@ -34,6 +52,12 @@ public class EnemySpawner : MonoBehaviour
                 timer = 0;
                 spwanEnemy();
             }
+        }
+
+        if(enemyCount <= 0)
+        {
+            GameManager.Instance.LevelComplete();
+            GameManager.Instance.Playing = false;
         }
         
     }
@@ -49,5 +73,16 @@ public class EnemySpawner : MonoBehaviour
         changeLocation();
         GameObject enemy = Instantiate<EnemyController>(enemyPrefab, spawnPoint.position, transform.rotation, transform).gameObject;
         enemyList.Add(enemy);
+    }
+
+    public void removeEnemy(GameObject enemy)
+    {
+        enemyList.RemoveAt(enemyList.IndexOf(enemy));
+        enemyCount--;
+    }
+
+    public void setEnemyCount(int _enemyCount)
+    {
+        enemyCount = _enemyCount;
     }
 }

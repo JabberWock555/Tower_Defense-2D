@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private static PlayerController instance;
+    public static PlayerController Instance { get { return instance; } }
 
-
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     [SerializeField] private int towerHealth;
     [SerializeField] private int playerHealth;
 
@@ -29,6 +41,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if( towerHealth < 0 && playerHealth < 0)
+        {
+            GameManager.Instance.LevelFailed();
+        }
        
     }
 
@@ -46,12 +62,12 @@ public class PlayerController : MonoBehaviour
         if (towerHealth > 0)
         {
             towerHealth -= damage;
-        }else if( playerHealth > 0 && towerHealth <= 0 )
+        }
+        else if (playerHealth > 0 && towerHealth <= 0)
         {
             playerHealth -= damage;
         }
     }
-
 
     
 }

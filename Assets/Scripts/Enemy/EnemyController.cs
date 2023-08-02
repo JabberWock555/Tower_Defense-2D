@@ -7,14 +7,14 @@ public class EnemyController : GunController
     [SerializeField] private float shootingTime;
     [SerializeField] private float movingSpeed;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private int health;
 
-    private int health;
     private float timer;
     private Vector3 direction;
     private readonly float aimOffset = 180f;
 
     private void Start()
-    {
+    { 
         timer = (float)(Random.Range(0, 10) * 0.1);
         playerTransform = GameObject.FindWithTag("Player").transform;
     }
@@ -35,7 +35,9 @@ public class EnemyController : GunController
         }
         else
         {
+            EnemySpawner.Instance.removeEnemy(gameObject);
             Destroy(gameObject);
+
         }
     }
 
@@ -67,6 +69,8 @@ public class EnemyController : GunController
         if (bullet != null)
         {
             Damage(bullet.bulletDamage);
+
+            GameManager.Instance.PlayerHit();
         }
     }
 }

@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d9b71d574414a4dba996c152ab719c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 8499130174165249505}
+  towerHealth: 100
+  playerHealth: 100
 --- !u!1 &6595601150425066429
 GameObject:
   m_ObjectHideFlags: 0
