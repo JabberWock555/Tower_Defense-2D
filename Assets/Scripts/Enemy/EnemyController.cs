@@ -9,6 +9,7 @@ public class EnemyController : GunController
     [SerializeField] private Transform playerTransform;
     [SerializeField] private int health;
 
+    private float moveLimit = 10f;
     private float timer;
     private Vector3 direction;
     private readonly float aimOffset = 180f;
@@ -21,7 +22,7 @@ public class EnemyController : GunController
 
     private void Update()
     {
-        if (health != 0)
+        if (health > 0)
         {
             Aim();
             movement();
@@ -37,7 +38,7 @@ public class EnemyController : GunController
         {
             EnemySpawner.Instance.removeEnemy(gameObject);
             Destroy(gameObject);
-
+            SoundManager.Instance.Play(SoundEvents.EnemyDestroy);
         }
     }
 
@@ -60,7 +61,10 @@ public class EnemyController : GunController
 
     private void movement()
     {
-        transform.position += direction.normalized * movingSpeed * Time.deltaTime;
+        if (direction.magnitude >= moveLimit)
+        {
+            transform.position += direction.normalized * movingSpeed * Time.deltaTime;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -73,4 +77,5 @@ public class EnemyController : GunController
             GameManager.Instance.PlayerHit();
         }
     }
+
 }

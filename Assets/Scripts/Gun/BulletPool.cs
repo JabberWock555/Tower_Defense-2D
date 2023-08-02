@@ -33,7 +33,7 @@ public class BulletPool : MonoBehaviour
         playerBulletList = new List<GameObject>();
         enemyBulletList = new List<GameObject>();
 
-        for (int i =0; i<playerBulletAmount; i++)
+        for (int i = 0; i < playerBulletAmount; i++)
         {
             GameObject bullet = Instantiate<Bullet>(playerBullet, transform).gameObject;
             bullet.SetActive(false);
@@ -73,6 +73,31 @@ public class BulletPool : MonoBehaviour
                 break;
         }
         return null;
+    }
+
+    private void OnDisable()
+    {
+        if (enemyBulletList != null)
+        {
+            for (int i = 0; i < enemyBulletList.Count; i++)
+            {
+                if (enemyBulletList[i] != null && enemyBulletList[i].activeInHierarchy)
+                {
+                    enemyBulletList[i].SetActive(false);
+                }
+            }
+        }
+
+        if (playerBulletList != null)
+        {
+            for (int i = 0; i < playerBulletList.Count; i++)
+            {
+                if (playerBulletList[i] != null && playerBulletList[i].activeInHierarchy)
+                {
+                    playerBulletList[i].SetActive(false);
+                }
+            }
+        }
     }
 }
 

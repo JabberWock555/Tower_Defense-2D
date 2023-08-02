@@ -57,6 +57,7 @@ public class GunController : MonoBehaviour
             bullet.SetActive(true);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.AddForce(firePoint.up * shootingSpeed, ForceMode2D.Impulse);
+            SoundManager.Instance.Play(SoundEvents.BulletShoot);
         }
     }
 }
