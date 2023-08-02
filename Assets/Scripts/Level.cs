@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class Level : MonoBehaviour
+
+public class Level 
 {
-    // Start is called before the first frame update
-    void Start()
+    public int levelNo;
+    public LevelStatus levelStatus;
+    public int enemyCount = 10;
+    private int increaseEnemy = 5;
+
+    public Level(int _levelNo)
     {
-        
+        levelStatus = LevelStatus.Level_Locked;
+        levelNo = _levelNo + 1;
+        enemyCount += _levelNo + increaseEnemy; 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
+public enum LevelStatus
+{
+    Level_Locked,
+    Level_Unlocked,
+    Level_Completed,
+};
