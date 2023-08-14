@@ -13,6 +13,8 @@
 
 Welcome to the exciting world of Tower Defense! In this game, you will take on the role of a skilled defender tasked with protecting your base from waves of relentless enemies. Your objective is to aim and shoot down the incoming enemies using your trusty tower defense system. The game offers challenging levels, and your success depends on your accuracy and strategic skills.
 
+## [Play](https://jabberwock-studio.itch.io/tower-defense-2d)
+
 ## Gameplay Instructions
 
 - **Mouse Aim:** Move your mouse cursor to aim the tower defense system.
